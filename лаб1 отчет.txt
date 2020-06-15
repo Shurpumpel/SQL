@@ -1,0 +1,108 @@
+-- 8 запрос на вывод таблицы customer
+SELECT     dbo.customer.*
+FROM         dbo.customer
+
+-- 13 запрос для получения таблицы результатов со столбцами Company и City, отсортированной в алфавитном порядке названий компаний
+SELECT     Company, City
+FROM         dbo.customer
+ORDER BY Company
+
+-- 14 запрос для получения таблицы результатов со столбцами Company и City, отсортированной в обратном алфавитном порядке названий компаний
+SELECT     Company, City
+FROM         dbo.customer
+ORDER BY Company DESC
+
+-- 15 запрос для получения списка компаний-покупателей, расположенных в штате Гавайи (HI
+SELECT     Company
+FROM         dbo.customer
+WHERE     (State = N'HI')
+
+-- 16 запрос для получения списка компаний-покупателей, расположенных в штате Гавайи (HI) или в Калифорнии (CA).
+SELECT     Company
+FROM         dbo.customer
+WHERE     (State = N'HI' OR
+                      State = N'CA')
+
+-- 17 запрос для получения списка компаний-покупателей, сделавших заказ в январе 1995 года
+SELECT     Company
+FROM         dbo.customer
+WHERE     (LastInvoiceDate BETWEEN CONVERT(DATETIME, '1995-01-01 00:00:00', 102) AND CONVERT(DATETIME, '1995-01-31 00:00:00', 102))
+
+-- 18 запрос для получения названий компаний-покупателей, начинающихся на букву “B” и оканчивающихся на “s”
+SELECT     Company
+FROM         dbo.customer
+WHERE     (Company LIKE N'B%s')
+
+-- запрос для получения списка компаний-покупателей с 5-значным почтовым индексом от 90000 до 99990.
+SELECT     Company, Zip
+FROM         dbo.customer
+WHERE     (Zip BETWEEN N'90000' AND N'99990' AND NOT (Zip LIKE N'%-%'))
+
+-- 20 запрос, который для всех компаний-покупателей вычисляет ставку налога TaxRate, увеличенную на 2%, без внесения изменений в таблицу.
+SELECT     Company, TaxRate,  TaxRate * '1.02' AS Expr1
+FROM         dbo.customer
+
+/****** Script for SelectTopNRows command from SSMS  ******/
+SELECT TOP 1000 [CustNo]
+      ,[Company]
+      ,[Addr1]
+      ,[Addr2]
+      ,[City]
+      ,[State]
+      ,[Zip]
+      ,[Country]
+      ,[Phone]
+      ,[FAX]
+      ,[TaxRate]
+      ,[Contact]
+      ,[LastInvoiceDate]
+  FROM [DBdemo].[dbo].[customer]
+
+-- 22 запрос с группировкой, который подсчитывает количество компаний-покупателей из каждого штата.
+SELECT     State, COUNT(Company) AS Expr1
+FROM         dbo.customer
+GROUP BY State
+
+SET              TaxRate = TaxRate * '1.01'
+
+-- 25 запрос, который добавляет в таблицу CUSTOMER строку, указав в качестве значения поля CustNo целое число, составленное из номера студенческой группы и номера компьютера, и функцию Now( ) в качестве значения поля LastInvoiceDate.
+INSERT INTO dbo.customer
+                      (CustNo, LastInvoiceDate)
+VALUES     (3124, { fn NOW() })
+
+--26 запрос, который удаляет из таблицы CUSTOMER строки, соответствующие компаниям-покупателям, сделавшим заказы после 1 января 2011 года.
+DELETE FROM dbo.customer
+WHERE     (LastInvoiceDate > CONVERT(DATETIME, '2011-01-01 00:00:00', 102))
+
+-- 27 многотабличный запрос (рис.16) для получения сведений о компаниях-покупателях, у которых цена заказа (столбец AmountPaid) меньше 1000 долларов.
+SELECT     dbo.customer.Company, dbo.orders.AmountPaid
+FROM         dbo.customer INNER JOIN
+                      dbo.orders ON dbo.customer.CustNo = dbo.orders.CustNo
+WHERE     (dbo.orders.AmountPaid < 1000)
+
+
+-- 28 многотабличный запрос для вывода названий компаний-покупателей, фамилий служащих, оформивших заказ, и имен поставщиков заказанных изделий
+SELECT     dbo.customer.Company, dbo.employee.LastName, dbo.vendors.VendorName
+FROM         dbo.employee INNER JOIN
+                      dbo.customer INNER JOIN
+                      dbo.orders ON dbo.customer.CustNo = dbo.orders.CustNo ON dbo.employee.EmpNo = dbo.orders.EmpNo INNER JOIN
+                      dbo.items ON dbo.orders.OrderNo = dbo.items.OrderNo INNER JOIN
+                      dbo.parts INNER JOIN
+                      dbo.vendors ON dbo.parts.VendorNo = dbo.vendors.VendorNo ON dbo.items.PartNo = dbo.parts.PartNo
+
+-- 29 многотабличный запрос для вывода названий компаний-покупателей и описаний изделий, заказанных в количестве, меньшем 10.
+SELECT     dbo.customer.Company, dbo.parts.Description, dbo.items.Qty
+FROM         dbo.items INNER JOIN
+                      dbo.parts ON dbo.items.PartNo = dbo.parts.PartNo INNER JOIN
+                      dbo.orders ON dbo.items.OrderNo = dbo.orders.OrderNo INNER JOIN
+                      dbo.customer ON dbo.orders.CustNo = dbo.customer.CustNo
+WHERE     (dbo.items.Qty < 10)
+
+-- 30 SELECT     dbo.parts.Description, dbo.parts.Cost, dbo.customer.Company
+SELECT     dbo.parts.Description, dbo.parts.Cost, dbo.customer.Company
+FROM         dbo.parts INNER JOIN
+                      dbo.items ON dbo.parts.PartNo = dbo.items.PartNo INNER JOIN
+                      dbo.orders ON dbo.items.OrderNo = dbo.orders.OrderNo INNER JOIN
+                      dbo.customer ON dbo.orders.CustNo = dbo.customer.CustNo
+WHERE     (dbo.parts.OnHand < dbo.parts.OnOrder)
+ORDER BY dbo.parts.OnHand DESC, dbo.parts.OnOrder

@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2020.04.30 17:54:26.797.cpp,C:\Users\8170872.SIPC.000\Documents\RAD Studio\Projects\Unit1.cpp=C:\Users\8170872.SIPC.000\Documents\SQL 6\Task2\Unit1.cpp</Transaction>
+    <Transaction>2020.04.30 17:54:26.797.h,C:\Users\8170872.SIPC.000\Documents\RAD Studio\Projects\Unit1.h=C:\Users\8170872.SIPC.000\Documents\SQL 6\Task2\Unit1.h</Transaction>
+    <Transaction>2020.04.30 17:54:26.797.dfm,C:\Users\8170872.SIPC.000\Documents\RAD Studio\Projects\Unit1.dfm=C:\Users\8170872.SIPC.000\Documents\SQL 6\Task2\Unit1.dfm</Transaction>
+    <Transaction>2020.04.30 17:54:28.446.cbproj,C:\Users\8170872.SIPC.000\Documents\RAD Studio\Projects\Project1.cbproj=C:\Users\8170872.SIPC.000\Documents\SQL 6\Task2\Project1.cbproj</Transaction>
+  </Transactions>
+</BorlandProject>

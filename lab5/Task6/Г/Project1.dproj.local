@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+  <Transactions>
+    <Transaction>2020.04.22 17:29:12.840.pas,C:\Users\8170872.SIPC.000\Documents\RAD Studio\Projects\Unit1.pas=H:\СУБД MSSQL\lab5\Task6\Г\Unit1.pas</Transaction>
+    <Transaction>2020.04.22 17:29:12.840.dfm,C:\Users\8170872.SIPC.000\Documents\RAD Studio\Projects\Unit1.dfm=H:\СУБД MSSQL\lab5\Task6\Г\Unit1.dfm</Transaction>
+    <Transaction>2020.04.22 17:29:13.786.dproj,C:\Users\8170872.SIPC.000\Documents\RAD Studio\Projects\Project1.dproj=H:\СУБД MSSQL\lab5\Task6\Г\Project1.dproj</Transaction>
+  </Transactions>
+</BorlandProject>
